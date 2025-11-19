@@ -1,0 +1,11 @@
+# Ignore all
+*
+
+# Unignore parent folders
+!/**/
+
+# Unignore file with extensions
+!**.*
+
+# Unignore Makefile
+!**/Makefile
