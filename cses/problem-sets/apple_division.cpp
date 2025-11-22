@@ -1,11 +1,12 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-/*
-This solution fails because C can be very large resulting in a very large array. Not enough memory.
-*/
+using ll = long long;
 
-int main() {
+// This solution fails because C can be very large resulting in a very large
+// array. Not enough memory.
+
+void dynamic_programming() {
     /* Get inputs */
     int n;
     cin >> n;
@@ -41,4 +42,37 @@ int main() {
     }
 
     cout << t - 2 * dp[c][n] << "\n";
+}
+
+int main() {
+    int n;
+    cin >> n;
+
+    ll apples[n];
+    for (int i = 0; i < n; i++) {
+        cin >> apples[i];
+    }
+
+    ll min_diff = numeric_limits<ll>::max();
+    // cout << min_diff << "\n";
+
+    // Use gray code to generate all possible subset for one group. Leftover
+    // apples go to the other group
+    for (int i = 0; i <= pow(2, n); i++) {
+        int code = i ^ (i >> 1);
+        ll first_group = 0;
+        ll second_group = 0;
+        for (int j = 0; j < n; j++) {
+            int mask = 1 << (n - (j + 1));
+            if (code & mask) {
+                first_group += apples[j];
+            } else {
+                second_group += apples[j];
+            }
+        }
+        min_diff = min(min_diff, abs(first_group - second_group));
+    }
+    cout << min_diff << "\n";
+
+    return 0;
 }
